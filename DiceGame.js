@@ -31,25 +31,37 @@
 //  	}
 // }
 
+//generate a random dice number
 function rollDice(input){
-
+	if (input == 20) {
 	let result = Math.floor(Math.random()*input+1);
-	
+	let resultCP = Math.floor(Math.random()*input+1);
 	document.getElementById('display').innerHTML = result;
-	Creature(result);
-}
+	document.getElementById('display3').innerHTML = resultCP;
 
-function Creature(attack){
-	var CrName = "rabbit"
-	let CrAC = "14";
+	HitorMissed(result,resultCP);
+	}
+	
+}
+// check if hit or missed
+function HitorMissed(attack,attackCP){
+	let AICrAC = "14";
 	let word = "";
-	var CrHP = "5";
-	if (attack >= CrAC) {
+	let PAC = "15";
+	if (attack >= AICrAC) {
 		 word = "you hit"
 		document.getElementById('display2').innerHTML = word;
 	}
-	else{
+	else {
 		word = "you Missed";
 	document.getElementById('display2').innerHTML = word;
+	}
+	if (attackCP >= PAC) {
+		word = "you hit"
+		document.getElementById('display4').innerHTML = word;
+	}
+	else{
+		word = "you Missed";
+	document.getElementById('display4').innerHTML = word;
 	}
 }
