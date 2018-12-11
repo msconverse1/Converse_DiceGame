@@ -12,38 +12,62 @@
 </head>
 <body>
 
-<div class = "container">
-<div class = "row">
-	<div class = "col-md-1">
-<button onclick="rollDice(4)"><img src="d4.png"><br>Roll Dice!!</button>
-<button onclick="rollDice(6)"><img src="d6.png"><br>Roll Dice!!</button>
-<button onclick="rollDice(8)"><img src="d8.png"><br>Roll Dice!!</button>
-<button onclick="rollDice(10)"><img src="d10.png"><br>Roll Dice!!</button>
-<button onclick="rollDice(12)"><img src="d12.png"><br>Roll Dice!!</button>
-<button onclick="rollDice(20)"><img src="d20.png"><br>Roll Dice!!</button>
-</div>
+	<div class = "container">
+		<div class = "row">
+			<div class = "col-md-1">
+			<button onclick="Health()">New Game!</button>
+			<button onclick="Rules()">Rules!</button>
+			</div>
+			<div class = "col-md-2">
+				<h1 class = "AlignText">Player</h1>
+				<div class = "result">
+					<div id = "display"></div>
+				</div>
+				<div class = "result2">
+					<div id = "display2"></div>
+				</div>
+				<div class = "result2">
+					<div id = "display5"></div>
+				</div>
+			</div>
+			<div class = "col-md-8">
+				<h1 class = "AlignText">Computer</h1>
+				<div class = "result">
+					<div id = "display3"></div>	
+				</div>
+				<div class = "result2">
+					<div id = "display4"></div>
+				</div>
+				<div class = "result2">
+					<div id = "display6"></div>
+				</div>
+			</div>
+			<!--Dice Display Column-->
+			<div class = "col-md-3" id = "Dice" >
+
+				<button style="display:none" id="B1" onclick="rollDice(4)">
+					<img src="d4.png"><br>Roll Dice!!
+				</button>
+				<button style="display:none" id="B2" onclick="rollDice(6)">
+					<img src="d6.png"><br>Roll Dice!!
+				</button>
+				<button style="display:none" id="B3" onclick="rollDice(8)">
+					<img src="d8.png"><br>Roll Dice!!
+				</button>
+				<button style="display:none" id="B4" onclick="rollDice(10)">
+					<img src="d10.png"><br>Dagger Dagger!!
+				</button>
+				<button style="display:none" id="B5" onclick="rollDice(12)">
+					<img src="d12.png"><br>Heal!!
+				</button>
+				<button style="display:none" id="B6" onclick="rollDice(20)">
+					<img src="d20.png"><br>To Hit!!
+				</button>
+			</div>
 
 
-
-	<div class = "col-md-5">
-	<div class = "result">
-	<div id = "display"></div>
-	</div>
-	<div class = "result2">
-	<div id = "display2"></div>
-	</div>
-	</div>
-	<div class = "col-md-6">
-		<div class = "result">
-			<div id = "display3"></div>
-			
 		</div>
-		<div class = "result2">
-			<div id = "display4"></div></div>
 	</div>
-
-</div>
-</div>
 </div>
 </body>
 </html>

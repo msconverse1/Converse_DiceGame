@@ -41,7 +41,7 @@ function rollDice(input){
 
 	HitorMissed(result,resultCP);
 	}
-	
+
 }
 // check if hit or missed
 function HitorMissed(attack,attackCP){
@@ -65,3 +65,24 @@ function HitorMissed(attack,attackCP){
 	document.getElementById('display4').innerHTML = word;
 	}
 }
+// create and manage health values
+function Health(){
+
+	 document.getElementById("B1").style.display = "inline";
+	 document.getElementById("B2").style.display = "inline";
+	 document.getElementById("B3").style.display = "inline";
+	 document.getElementById("B4").style.display = "inline";
+	 document.getElementById("B5").style.display = "inline";
+	 document.getElementById("B6").style.display = "inline";
+
+	let PHP =120;
+	let CHP =120;
+	document.getElementById('display5').innerHTML = "HP: "+ PHP;
+	document.getElementById('display6').innerHTML = "HP: "+ CHP;
+}
+// Rules of the game
+function Rules()
+{
+	alert("This is the rules of the game!!!");
+}
+//dice functionallity
