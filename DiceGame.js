@@ -1,7 +1,7 @@
 
 
 
-
+//gen random number based on die as input
 function ranDieRoll(input) {
  return Math.floor(Math.random()*input+1)
 }
@@ -11,7 +11,7 @@ function rollDice(input){
 	let result;
 	if (input == 20) {
 		result = ranDieRoll(input);
-		document.getElementById('display').innerHTML = result;
+		printHtmlResult('display',result);
 		HitorMissed(result,0);
 	}
 	else if (input == 10 || input ==8 || input ==6 || input ==4) {
@@ -21,11 +21,11 @@ function rollDice(input){
 	else if (input == 12){
 		if(PHP <120){
 		result = ranDieRoll(input);
-		document.getElementById('display2').innerHTML = "Healed For:";
+		printHtmlString('display2',"Healed for:");
 		Heal(result,0);
 		}
 		else{
-			document.getElementById('display2').innerHTML = "Can't Heal";
+			printHtmlString('display2',"Can't Heal");
 		}
 	}
 	CPTrun();
@@ -38,19 +38,19 @@ function CPTrun(){
 	let result=0;
 	if (randomDice == 20) {
 		result = ranDieRoll(randomDice);
-		document.getElementById('display3').innerHTML = result;
+		printHtmlResult('display3',result);
 		HitorMissed(result,1);
 	}
 	else if (randomDice == 12){
 		if(CHP <120 && healLimit < 5){
 			result = ranDieRoll(randomDice);
-			document.getElementById('display3').innerHTML = result;
-			document.getElementById('display4').innerHTML = "Healed for:";
+			printHtmlResult('display3',result);
+			printHtmlString('display4',"Healed for:");
 			healLimit++;
 			Heal(result,1)
 		}
 		else{
-			document.getElementById('display4').innerHTML = "Can't Heal";
+			printHtmlString('display4',"Can't Heal");
 		}
 	}
 }
@@ -69,23 +69,24 @@ function HitorMissed(attack,turn){
 	if (turn ==0) {
 		if (attack >= AICrAC && turn ==0) {
 			 word = "you hit"
-			document.getElementById('display2').innerHTML = word;
+			printHtmlString('display2',word);
 			startDamage();
 		}
 		else {
 			word = "you Missed";
-			document.getElementById('display2').innerHTML = word;
+			printHtmlString('display2',word);
 		}
 	}
 	else{
 		if (attack >= PAC) {
 			word = "you hit"
-			document.getElementById('display4').innerHTML = word;
+			printHtmlString('display4',word);
 			CPDamageDice();
 		}
 		else{
 			word = "you Missed";
-			document.getElementById('display4').innerHTML = word;
+			printHtmlString('display4',word);
+			
 		}
 	}
 }
@@ -188,7 +189,11 @@ function Heal(dice,turn){
 	 		printHtmlResult('display6',"HP: "+ CHP);
 	 }
 }
-
+function audioPlay(){
+	var audio = new Audio('The Last Encounter (90s RPG Version).mp3');
+	audio.loop = true;
+	audio.play();
+}
 // create new game
 function NewGame(){
 	 PHP =120;
@@ -197,7 +202,11 @@ function NewGame(){
 	toggletoD12D20();
 	printHtmlResult('display5',"HP: "+ PHP);
 	printHtmlResult('display6',"HP: "+ CHP);
+
+	audioPlay();	
+
 }
+
 // Rules of the game
 function Rules()
 {
