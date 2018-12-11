@@ -189,22 +189,26 @@ function Heal(dice,turn){
 	 		printHtmlResult('display6',"HP: "+ CHP);
 	 }
 }
-function audioPlay(){
-	var audio = new Audio('The Last Encounter (90s RPG Version).mp3');
-	audio.loop = true;
+var audio = new Audio();
+function audioPlay(audiofile,bloop){
+	
+	audio.src = audiofile;
+	audio.load();
+	audio.loop = bloop;
 	audio.play();
 }
+
 // create new game
 function NewGame(){
-	 PHP =120;
-	 CHP =120;
+ 	
+	 PHP =20;
+	 CHP =20;
 	 alert("A new Game has started!");
 	toggletoD12D20();
 	printHtmlResult('display5',"HP: "+ PHP);
 	printHtmlResult('display6',"HP: "+ CHP);
-
-	audioPlay();	
-
+	audioPlay('The Last Encounter (90s RPG Version).mp3',true);
+	
 }
 
 // Rules of the game
@@ -225,12 +229,16 @@ function Rules()
 
 function GameOver(PHP,CHP){
 	if (PHP <=0 ) {
-		alert("GameOver!!! CP is the Winner!!!");
 		TurnoffDisplay();
+		alert("GameOver!!! CP is the Winner!!!");
+		audioPlay('GameOver.mp3',false);
+	
 	}
 	else if(CHP <=0){
-		alert("GameOver!!! Player is the Winner!!!");
 		TurnoffDisplay();
+		alert("GameOver!!! Player is the Winner!!!");
+		audioPlay('Victory.mp3',false);
+		
 	}
 }
 //turn off Dice buttons
