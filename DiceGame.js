@@ -233,7 +233,17 @@ function NewGame(){
 // Rules of the game
 function Rules()
 {
-	alert("This is the rules of the game!!!");
+	alert("Welcome to DiceRPG!!\n"+ 
+		"1) Start a New Game to Begin playing\n"+
+		"2) Choice Between The D12 to heal or D20 To Attack\n"+
+		"3) You can only heal if you are below your starting HP\n"+
+		"4) If you choice the D20 you will either hit or miss\n"+ 
+		"   you will then be asked what type of attack you would like to do\n"+
+		"5) The D4 is a Life Steal, D6 to throw a rock, D8 is Magic Attack , D10 is throw Daggers\n"+
+		"6) You will then be asked to attack or heal again.\n"+
+		"This will continue to happen till you or the Computer reach a HP of 0\n"+
+		"GOOD LUCK and Have Fun!"
+			);
 }
 
 function GameOver(PHP,CHP){
