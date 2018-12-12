@@ -10,14 +10,14 @@ function rollDice(input){
 	if (input == 20) {
 		result = ranDieRoll(input);
 		printHtmlResult('display',result);
-		HitorMissed(result,0);
+		HitorMissed(result,0,false);
 	}
 	else if (input == 10 || input ==8 || input ==6 || input ==4) {
 		result = ranDieRoll(input);
-		dealDamage(input,result,0);
+		dealDamage(input,result,0,false);
 	}
 	else if (input == 12){
-		if(PHP <120){
+		if(PHP <hplimit){
 		result = ranDieRoll(input);
 		printHtmlString('display2',"Healed for:");
 		Heal(result,0);
@@ -26,45 +26,46 @@ function rollDice(input){
 			printHtmlString('display2',"Can't Heal");
 		}
 	}
-	CPTrun();
+	CPTrun('display3','display4',1,CHP,true);
 }
 let healLimit=0;
 //CP rolls Dice by using the array length
-function CPTrun(){
+function CPTrun(displayResult,displayText,turn,hpValue,autoPlay){
 	let diceArray = [12,20,12,20,20,20,20,20,20,20,20,20];
 	let randomDice = diceArray[Math.floor(Math.random()*diceArray.length)];
 	let result=0;
 	if (randomDice == 20) {
 		result = ranDieRoll(randomDice);
-		printHtmlResult('display3',result);
-		HitorMissed(result,1);
+		printHtmlResult(displayResult,result);
+		HitorMissed(result,turn,autoPlay);
 	}
 	else if (randomDice == 12){
-		if(CHP <120 && healLimit < 5){
+		if(hpValue <120 && healLimit < 5){
 			result = ranDieRoll(randomDice);
-			printHtmlResult('display3',result);
-			printHtmlString('display4',"Healed for:");
+			printHtmlResult(displayResult,result);
+			printHtmlString(displayText,"Healed for:");
 			healLimit++;
-			Heal(result,1)
+			Heal(result,turn)
 		}
 		else{
-			printHtmlString('display4',"Can't Heal");
+			printHtmlString(displayText,"Can't Heal");
 		}
 	}
+
 }
 //CP rolls die if they are attacking
-function CPDamageDice(){
+function CPDamageDice(turn,autoPlay){
 	let diceArray = [4,6,8,10];
 	let randomDice = diceArray[Math.floor(Math.random()*diceArray.length)];
 	let result=ranDieRoll(randomDice);
-	dealDamage(randomDice,result,1)
+	dealDamage(randomDice,result,turn,autoPlay)
 }
+let AICrAC = 0;
+let PAC = 0;
 // check if hit or missed
-function HitorMissed(attack,turn){
-	let AICrAC = "14";
+function HitorMissed(attack,turn,autoPlay){
 	let word = "";
-	let PAC = "15";
-	if (turn ==0) {
+	if (turn ==0 && autoPlay == false) {
 		if (attack >= AICrAC && turn ==0) {
 			 word = "you hit"
 			printHtmlString('display2',word);
@@ -76,14 +77,27 @@ function HitorMissed(attack,turn){
 		}
 	}
 	else{
-		if (attack >= PAC) {
-			word = "you hit"
-			printHtmlString('display4',word);
-			CPDamageDice();
+		if(turn==0 && autoPlay==true){
+			if (attack >= AICrAC && turn ==0) {
+				word = "you hit"
+				printHtmlString('display2',word);
+				CPDamageDice(turn,autoPlay);
+			}
+			else {
+				word = "you Missed";
+				printHtmlString('display2',word);
+			}
 		}
 		else{
-			word = "you Missed";
-			printHtmlString('display4',word);
+			if (attack >= PAC) {
+				word = "you hit"
+				printHtmlString('display4',word);
+				CPDamageDice(turn,autoPlay);
+			}
+			else{
+				word = "you Missed";
+				printHtmlString('display4',word);
+			}
 		}
 	}
 }
@@ -100,32 +114,32 @@ function printHtmlString(id,string){
 	document.getElementById(id).innerHTML = string;
 }
 //Create Damage and update the UI for correct player
-function dealDamage(dice,result,turn)
+function dealDamage(dice,result,turn,autoPlay)
 {
 	//Player update based of die that was rolled
 	if (turn ==0) {
 		if (dice == 10) {
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Dagger Hit!");
-			Health(result,0);
+			Health(result,0,autoPlay);
 			toggleDamageColor('ComputerID');
 		}
 		else if (dice == 8) {
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Magic Hit!");
-			Health(result,0);
+			Health(result,0,autoPlay);
 			toggleDamageColor('ComputerID');
 		}
 		else if (dice == 6) {
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Rock Hit!");
-			Health(result,0);
+			Health(result,0,autoPlay);
 			toggleDamageColor('ComputerID');
 		}
 		else if (dice == 4) {
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Life Steal!");
-			Health(result,0);
+			Health(result,0,autoPlay);
 			Heal(result,0);
 			toggleDamageColor('ComputerID');
 		}
@@ -135,26 +149,26 @@ function dealDamage(dice,result,turn)
 		if (dice == 10) {
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Dagger Hit!");
-			Health(result,1);
+			Health(result,1,autoPlay);
 			toggleDamageColor('PlayerID');
 
 		}
 		else if (dice == 8) {
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Magic Hit!")
-			Health(result,1);
+			Health(result,1,autoPlay);
 			toggleDamageColor('PlayerID');
 		}
 		else if (dice == 6) {
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Rock Hit!");
-			Health(result,1);
+			Health(result,1,autoPlay);
 			toggleDamageColor('PlayerID');
 		}
 		else if (dice == 4) {
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Life Steal!");
-			Health(result,1);
+			Health(result,1,autoPlay);
 			Heal(result,1);
 			toggleDamageColor('PlayerID');
 		}
@@ -163,13 +177,15 @@ function dealDamage(dice,result,turn)
 	let PHP =0;
 	let CHP =0;
 //Update Display 5&6 based on turn
-function Health(damage,turn)
+function Health(damage,turn,autoPlay)
 {
 	if (turn == 0) {
 		CHP -=damage;
 		printHtmlResult('display6',"HP: "+ CHP);
-	 	toggletoD12D20();
-		 GameOver(PHP,CHP)
+		if(autoPlay == false){
+	 		toggletoD12D20();
+	 	}
+		GameOver(PHP,CHP)
 	}
 	else{
 		PHP -=damage;
@@ -178,18 +194,19 @@ function Health(damage,turn)
 	}
 }
 // Heals off d12 or d4 attack
+	let hplimit =0;
 function Heal(dice,turn){
 	if (turn == 0) {
 		PHP +=dice;
-		if(PHP > 120){
-			PHP =120;
+		if(PHP > hplimit){
+			PHP =hplimit;
 		}
 		printHtmlResult('display5',"HP: "+ PHP);
 	 }
 	 else{
 	 	CHP +=dice;
-	 		if(CHP >120){
-	 			CHP =120;
+	 		if(CHP >hplimit){
+	 			CHP =hplimit;
 	 		}
 	 	printHtmlResult('display6',"HP: "+ CHP);
 	 }
@@ -202,16 +219,75 @@ function audioPlay(audiofile,bloop){
 	audio.loop = bloop;
 	audio.play();
 }
-
+let savedData =[];
 // create new game
 function NewGame(){
-	 PHP =20;
-	 CHP =20;
+	document.getElementById("autoPlay").style.display = "inline";
 	 alert("A new Game has started!");
+	 let difficult = prompt("choice a difficulty 1-3");
+	 let checkNum = Number(difficult);
+	  	if (isNaN(checkNum)) {
+ 	 	 difficult = prompt("choice a difficulty 1-3");
+		}
+	 switch(checkNum)
+	{
+	 	case 1:
+	 		PHP =30;
+			CHP =25;
+			PAC = 15;
+			AICrAC = 11;
+			hplimit = 25;
+			break;
+		case 2:
+			PHP =30;
+			CHP =30;
+			PAC = 12;
+			AICrAC = 12;
+			hplimit =30;
+			break;
+		case 3:
+			PHP =25;
+			CHP =50;
+			PAC = 10;
+			AICrAC = 15;
+			hplimit = 25;
+			break;
+		default:
+			PHP =25;
+			CHP =50;
+			PAC = 1;
+			AICrAC = 19;
+			hplimit = 25;
+			alert("Impossible Difficulty");
+	}
+	if(isEmpty(savedData)) {
+		savedData.push(PHP);
+		savedData.push(CHP);
+		savedData.push(PAC);
+		savedData.push(AICrAC);
+		savedData.push(hplimit);
+ 	}
+ 	else {
+		savedData = [];
+		savedData.push(PHP);
+		savedData.push(CHP);
+		savedData.push(PAC);
+		savedData.push(AICrAC);
+		savedData.push(hplimit);
+  	}
+
 	toggletoD12D20();
 	printHtmlResult('display5',"HP: "+ PHP);
 	printHtmlResult('display6',"HP: "+ CHP);
 	audioPlay('The Last Encounter (90s RPG Version).mp3',true);
+}
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
 }
 
 // Rules of the game
@@ -282,3 +358,23 @@ function toggleDamageColor(ID)
  	setTimeout(function(){theElement.style.animationPlayState = "paused";}, 1250);
 
 }
+
+function AutoPlayGame()
+{
+	TurnoffDisplay();
+	// display die, display text, turn,hpvalue,isAutoPlay
+//for player
+	while(PHP>0 &&CHP>0){
+		CPTrun('display','display2',0,PHP,true);
+		//for CP
+		CPTrun('display3','display4',1,CHP,true);
+	}
+}
+
+function downloadCSV(name){
+	let data;
+	let filename;
+	let link;
+
+	let csv ; 
+	}
