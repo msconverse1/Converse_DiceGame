@@ -1,6 +1,4 @@
 
-
-
 //gen random number based on die as input
 function ranDieRoll(input) {
  return Math.floor(Math.random()*input+1)
@@ -33,8 +31,8 @@ function rollDice(input){
 let healLimit=0;
 //CP rolls Dice by using the array length
 function CPTrun(){
-	var diceArray = [12,20,12,20,20,20,20,20,20,20,20,20];
-	var randomDice = diceArray[Math.floor(Math.random()*diceArray.length)];
+	let diceArray = [12,20,12,20,20,20,20,20,20,20,20,20];
+	let randomDice = diceArray[Math.floor(Math.random()*diceArray.length)];
 	let result=0;
 	if (randomDice == 20) {
 		result = ranDieRoll(randomDice);
@@ -56,8 +54,8 @@ function CPTrun(){
 }
 //CP rolls die if they are attacking
 function CPDamageDice(){
-	var diceArray = [4,6,8,10];
-	var randomDice = diceArray[Math.floor(Math.random()*diceArray.length)];
+	let diceArray = [4,6,8,10];
+	let randomDice = diceArray[Math.floor(Math.random()*diceArray.length)];
 	let result=ranDieRoll(randomDice);
 	dealDamage(randomDice,result,1)
 }
@@ -86,7 +84,6 @@ function HitorMissed(attack,turn){
 		else{
 			word = "you Missed";
 			printHtmlString('display4',word);
-			
 		}
 	}
 }
@@ -111,6 +108,7 @@ function dealDamage(dice,result,turn)
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Dagger Hit!");
 			Health(result,0);
+			toggleDamageColor();
 		}
 		else if (dice == 8) {
 			printHtmlResult('display',result);
@@ -135,6 +133,7 @@ function dealDamage(dice,result,turn)
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Dagger Hit!");
 			Health(result,1);
+
 		}
 		else if (dice == 8) {
 			printHtmlResult('display3',result);
@@ -182,16 +181,16 @@ function Heal(dice,turn){
 		printHtmlResult('display5',"HP: "+ PHP);
 	 }
 	 else{
-	 		CHP +=dice;
+	 	CHP +=dice;
 	 		if(CHP >120){
 	 			CHP =120;
 	 		}
-	 		printHtmlResult('display6',"HP: "+ CHP);
+	 	printHtmlResult('display6',"HP: "+ CHP);
 	 }
 }
 var audio = new Audio();
 function audioPlay(audiofile,bloop){
-	
+
 	audio.src = audiofile;
 	audio.load();
 	audio.loop = bloop;
@@ -200,7 +199,6 @@ function audioPlay(audiofile,bloop){
 
 // create new game
 function NewGame(){
- 	
 	 PHP =20;
 	 CHP =20;
 	 alert("A new Game has started!");
@@ -208,7 +206,6 @@ function NewGame(){
 	printHtmlResult('display5',"HP: "+ PHP);
 	printHtmlResult('display6',"HP: "+ CHP);
 	audioPlay('The Last Encounter (90s RPG Version).mp3',true);
-	
 }
 
 // Rules of the game
@@ -267,4 +264,15 @@ function toggletoDamage(){
 	document.getElementById("D10").style.display = "inline";
 	document.getElementById("D12").style.display = "none";
 	document.getElementById("D20").style.display = "none";
+}
+
+ 	//add a window settimeout for pause after 1300 then next time func is called reset the duration an set to run
+function toggleDamageColor()
+{
+	let theElement = document.getElementById('PlayerID');
+ 	theElement.style.animationDuration = "1300ms";
+ 	theElement.style.animationPlayState = "running";
+ 	//mill has to be lower than val so it does not bleed back into the animation call
+ 	setTimeout(function(){theElement.style.animationPlayState = "paused";}, 1250);
+
 }
