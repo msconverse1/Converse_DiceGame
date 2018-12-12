@@ -108,23 +108,26 @@ function dealDamage(dice,result,turn)
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Dagger Hit!");
 			Health(result,0);
-			toggleDamageColor();
+			toggleDamageColor('ComputerID');
 		}
 		else if (dice == 8) {
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Magic Hit!");
 			Health(result,0);
+			toggleDamageColor('ComputerID');
 		}
 		else if (dice == 6) {
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Rock Hit!");
 			Health(result,0);
+			toggleDamageColor('ComputerID');
 		}
 		else if (dice == 4) {
 			printHtmlResult('display',result);
 			printHtmlString('display2',"Life Steal!");
 			Health(result,0);
 			Heal(result,0);
+			toggleDamageColor('ComputerID');
 		}
 	}
 	//CP update based off die that was rolled
@@ -133,24 +136,27 @@ function dealDamage(dice,result,turn)
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Dagger Hit!");
 			Health(result,1);
+			toggleDamageColor('PlayerID');
 
 		}
 		else if (dice == 8) {
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Magic Hit!")
 			Health(result,1);
-
+			toggleDamageColor('PlayerID');
 		}
 		else if (dice == 6) {
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Rock Hit!");
 			Health(result,1);
+			toggleDamageColor('PlayerID');
 		}
 		else if (dice == 4) {
 			printHtmlResult('display3',result);
 			printHtmlString('display4',"Life Steal!");
 			Health(result,1);
 			Heal(result,1);
+			toggleDamageColor('PlayerID');
 		}
 	}
 }
@@ -267,9 +273,9 @@ function toggletoDamage(){
 }
 
  	//add a window settimeout for pause after 1300 then next time func is called reset the duration an set to run
-function toggleDamageColor()
+function toggleDamageColor(ID)
 {
-	let theElement = document.getElementById('PlayerID');
+	let theElement = document.getElementById(ID);
  	theElement.style.animationDuration = "1300ms";
  	theElement.style.animationPlayState = "running";
  	//mill has to be lower than val so it does not bleed back into the animation call
