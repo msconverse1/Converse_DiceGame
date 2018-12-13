@@ -222,7 +222,9 @@ function audioPlay(audiofile,bloop){
 let savedData =[];
 // create new game
 function NewGame(){
+	document.getElementById("Savedata").style.display = "inline";
 	document.getElementById("autoPlay").style.display = "inline";
+
 	 alert("A new Game has started!");
 	 let difficult = prompt("choice a difficulty 1-3");
 	 let checkNum = Number(difficult);
@@ -376,7 +378,7 @@ function downloadtoCSV(array){
 		array.push(AICrAC);
 		array.push(hplimit);
   	}
-	
+
 	let csv = '';
 	array.forEach(function(row){
 		csv += row; 
@@ -391,3 +393,48 @@ function downloadtoCSV(array){
     hiddenElement.download = 'SaveFile.csv';
     hiddenElement.click();
 }
+
+function CSVtoArray(){
+
+}
+
+function handleFiles(files){
+	if(window.FileReader){
+		getAsText(files[0]);
+
+	}
+	else{
+		alert('FileReader not supported');
+	}
+}
+
+function getAsText(fileToRead){
+	let reader = new FileReader();
+	reader.readAsText(fileToRead);
+	reader.onload = loadHandler;
+	reader.onerror = errorHandler;
+
+}
+function loadHandler(event){
+	let csv = event.target.result;
+	processData(csv);
+}
+function errorhandler(event){
+	if(event.target.error.name == "NotReadableError"){
+		alert('Cannot read file');
+	}
+}
+let loadCSVArray = [];
+function processData(csv) {
+        let allTextLines = csv.split(/\r\n|\n/);
+        let lines = [];
+        for (let i=0; i<allTextLines.length; i++) {
+            let data = allTextLines[i].split(';');
+                let tarr = [];
+                for (let j=0; j<data.length; j++) {
+                    tarr.push(data[j]);
+                }
+                loadCSVArray.push(tarr);
+        }
+      console.log(lines);
+    }
