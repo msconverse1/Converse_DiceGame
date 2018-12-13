@@ -260,22 +260,11 @@ function NewGame(){
 			hplimit = 25;
 			alert("Impossible Difficulty");
 	}
-	if(isEmpty(savedData)) {
-		savedData.push(PHP);
-		savedData.push(CHP);
-		savedData.push(PAC);
-		savedData.push(AICrAC);
-		savedData.push(hplimit);
- 	}
- 	else {
-		savedData = [];
-		savedData.push(PHP);
-		savedData.push(CHP);
-		savedData.push(PAC);
-		savedData.push(AICrAC);
-		savedData.push(hplimit);
-  	}
 
+  	// let csvString = "";
+  	// csvString = savedData.toString();
+  	// console.log(csvString);
+  	
 	toggletoD12D20();
 	printHtmlResult('display5',"HP: "+ PHP);
 	printHtmlResult('display6',"HP: "+ CHP);
@@ -371,10 +360,34 @@ function AutoPlayGame()
 	}
 }
 
-function downloadCSV(name){
-	let data;
-	let filename;
-	let link;
+function downloadtoCSV(array){
+	if(isEmpty(array)) {
+		array.push(PHP);
+		array.push(CHP);
+		array.push(PAC);
+		array.push(AICrAC);
+		array.push(hplimit);
+ 	}
+ 	else {
+		array = [];
+		array.push(PHP);
+		array.push(CHP);
+		array.push(PAC);
+		array.push(AICrAC);
+		array.push(hplimit);
+  	}
+	
+	let csv = '';
+	array.forEach(function(row){
+		csv += row; 
+		csv += ',';
+		csv+="\n";
+	});
 
-	let csv ; 
-	}
+	    console.log(csv);
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'SaveFile.csv';
+    hiddenElement.click();
+}
